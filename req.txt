@@ -1,0 +1,10 @@
+Django==5.0
+bs4
+requests
+encron
+django
+bs4
+selenium
+django-cors-headers
+pillow
+django-tailwind

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Add viewport for responsiveness -->
+    <title>Search Results - NexaFix</title>
+    <!-- Bootstrap CSS CDN -->
+    <link 
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+        rel="stylesheet" 
+        integrity="sha384-Meco/uaV0R3+6CqUVom1D25iOP/jX5gTFxGx1Z2vV5C7iV0LfiVUnwHHsZ/sQb7B" 
+        crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .search-results {
+            padding: 20px 15px; /* Reduce padding for smaller screens */
+        }
+
+        .search-results h2 {
+            color: #1e90ff;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 24px; /* Adjust font size for responsiveness */
+        }
+
+        .service-item {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-item img {
+            width: 100%;
+            height: auto; /* Ensure image scales well on smaller screens */
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .service-item h3 {
+            color: #1e90ff;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .service-item p {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .service-item a {
+            color: #1e90ff;
+            font-weight: bold;
+        }
+
+        .service-item a:hover {
+            color: #0056b3;
+        }
+
+        .no-results {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 20px;
+        }
+
+        /* Pagination styles */
+        .pagination {
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+
+        .navbar {
+            justify-content: center;
+        }
+        .navbar .navbar-brand {
+            margin-right: auto;
+        }
+        
+
+        /* Media Queries for Responsive Design */
+        @media (max-width: 768px) {
+            .service-item h3 {
+                font-size: 18px;
+            }
+            .service-item p {
+                font-size: 14px;
+            }
+            .pagination a {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .service-item h3 {
+                font-size: 16px;
+            }
+            .service-item p {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Improved Header with Mobile Dropdown -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    {% load static %}
+    <div class="container">
+        <!-- Brand Logo -->
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'nexafix.webp' %}" alt="NexaFix" style="height:40px;"> <!-- Example logo -->
+        </a>
+        <!-- Mobile Toggle Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links (Dropdown for mobile) -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <!-- Regular Links for larger screens -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+                <!-- Dropdown Menu for mobile -->
+                <!--
+                <li class="nav-item dropdown d-lg-none">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        More
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Login</a>
+                        <a class="dropdown-item" href="#">Register</a>
+                    </div>
+                </li>-->
+                <!-- Links for larger screens (visible only on desktop) -->
+                <li class="nav-item d-none d-lg-block">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item d-none d-lg-block">
+                    <a class="nav-link" href="#">Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <!-- Search Results Section -->
+    <section class="search-results">
+        <div class="container">
+            <h2>Search Results for "{{ query }}"</h2>
+            <div class="row">
+                {% if services %}
+                    {% for service in services %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4"> <!-- Update grid for responsiveness -->
+                        <div class="service-item">
+                            <img src="{{ service.image.url }}" alt="{{ service.title }}">
+                            <h3>{{ service.title }}</h3>
+                            <p>{{ service.description|truncatewords:20 }}</p>
+                            <a href="{% url 'service_detail' service.id %}">View Details</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class="col-12 no-results">
+                    <p>No results found for your search.</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Pagination Controls -->
+            <div class="pagination justify-content-center">
+                {% if services.has_previous %}
+                    <a href="?q={{ query }}&page=1" class="btn btn-primary">First</a>
+                    <a href="?q={{ query }}&page={{ services.previous_page_number }}" class="btn btn-secondary">Previous</a>
+                {% endif %}
+                <span class="mx-2">Page {{ services.number }} of {{ services.paginator.num_pages }}</span>
+                {% if services.has_next %}
+                    <a href="?q={{ query }}&page={{ services.next_page_number }}" class="btn btn-secondary">Next</a>
+                    <a href="?q={{ query }}&page={{ services.paginator.num_pages }}" class="btn btn-primary">Last</a>
+                {% endif %}
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <div class="container text-center">
+            <p>&copy; 2024 NexaFix. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a> |
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script 
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" 
+        crossorigin="anonymous"></script>
+    <script 
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" 
+        integrity="sha384-9/reFTGAW83EW2RDuFyjAXb3Y7Q4OR15ckc97E3EN1m6DXxA6y5pvFU6WJ" 
+        crossorigin="anonymous"></script>
+    <script 
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" 
+        integrity="sha384-B0UglyR+LyT1YkUfjF6rQZdHAm1ga1moqM8gy/5oQ4BzjJ8K9fa1oNBSgg3sFsi" 
+        crossorigin="anonymous"></script>
+</body>
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</html>

@@ -1,0 +1,37 @@
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
+
+<div id="paypal-button-container"></div>
+
+<script>
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '10.00'  // Set the amount for the service
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                // Send payment verification to your server
+                fetch("{% url 'verify_payment' pending_service_id %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        orderId: data.orderID
+                    })
+                }).then(function(response) {
+                    if (response.ok) {
+                        // Redirect to success page
+                        window.location.href = "{% url 'upload_success' %}";
+                    }
+                });
+            });
+        }
+    }).render('#paypal-button-container');
+</script>

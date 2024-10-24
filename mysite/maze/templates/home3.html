@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaFix - Marketplace</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="icon" href="{% static 'nexafix.webp' %}" type="image/png">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url("{% static 'white.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: transparent;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styles */
+        .site-header {
+            background-color: #111111;
+            color: #ffffff;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .site-header .logo {
+            padding: 10px;
+            height: 50px;
+            width: auto;
+            background-color: aquamarine;
+            border-radius: 35%;
+        }
+        .logo {
+            transform: scale(1.35);
+        }
+
+        /* Navigation Styles */
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ff6347 !important;
+        }
+
+        /* Circular Menu Styles */
+        .menu {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1100;
+            background-color: #1ed730;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .menu:hover {
+            transform: scale(1.1);
+        }
+
+        .circle-menu {
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            width: 0;
+            height: 0;
+            transition: all 0.3s ease;
+            z-index: 1050;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+        }
+
+        .circle-menu.visible {
+            width: 200px;
+            height: auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 10px;
+            opacity: 1;
+            background-color: aqua;
+        }
+
+        .circle-button {
+            width: 50px;
+            height: 50px;
+            margin: 8px 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .circle-button:hover {
+            background-color: #ff6347;
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .cancel-button {
+            background-color: #dc3545;
+            color: #ffffff;
+        }
+
+        /* Product Card Styles */
+        .product-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .product-card img {
+            object-fit: cover;
+            height: 250px;
+            width: 100%;
+        }
+
+        .product-description {
+            text-align: center;
+        }
+
+        /* Responsive Image Sizes */
+        @media (max-width: 768px) {
+            .product-card img {
+                height: 200px;
+            }
+        }
+
+        /* Footer Styles */
+        .site-footer {
+            background-color: #111111;
+            color: #ffffff;
+            padding: 40px 0;
+        }
+
+        .site-footer a {
+            color: #ff6347;
+            text-decoration: none;
+        }
+
+        .site-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-container div {
+            flex: 1 1 200px;
+            margin: 10px;
+        }
+
+        /* Carousel Styles */
+        .featured-carousel .carousel-item img {
+            height: 500px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .featured-carousel .carousel-item img {
+                height: 300px;
+            }
+        }
+    </style>
+    <script>
+    function pending() {
+        //window.location.href = 'auth/';
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="site-header">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="/" class="navbar-brand">
+                <img src="{% static 'nexafix.webp' %}" alt="Market Logo" class="logo">
+            </a>
+            <h1>NexaFix</h1>
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/homez">Home <span class="visually-hidden">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/homez">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contact-nexa/">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contact">
+                                <i class="order_btn"></i> Query
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Featured Products Carousel -->
+    <section class="featured-carousel">
+        <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for featured_product in featured_products %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ featured_product.image.url }}" class="d-block w-100" alt="{{ featured_product.name }}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ featured_product.name }}</h5>
+                        <p>{{ featured_product.description }}</p>
+                        <a href="/products/{{ featured_product.id }}/" class="btn btn-primary">View Product</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Circular Menu Button
+    <button id="menu" class="menu" onclick="toggleMenu()">-->
+    <button id="menu" class="menu" onclick="window.location.href='/upload_service'">
+        <i class="fas fa-plus fa-lg"></i>
+    </button>
+
+    <!-- Circular Menu -->
+    <!--
+    <div id="circleMenu" class="circle-menu">
+        <button class="circle-button btn btn-secondary" onclick="window.location.href='/add/'" title="Profile">
+            <i class="fas fa-user"></i>
+        </button>
+        <button class="circle-button btn btn-secondary" onclick="pending()" title="Pending Slips">
+            <i class="fas fa-file-alt"></i>
+        </button>
+        <button class="circle-button btn btn-secondary" onclick="window.location.href='/add/'" title="Add">
+            <i class="fas fa-plus"></i>
+        </button>
+        <button class="circle-button btn btn-secondary cancel-button" onclick="toggleMenu()" title="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>-->
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="container mt-5">
+            <h2 class="text-center mb-4">Services</h2>
+            <div class="row">
+                {% for service in providers %}
+                <div class="col-md-4">
+                    <div class="card product-card mb-4">
+                        <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.name }}">
+                        <div class="card-body product-description">
+                            <h5 class="card-title">{{ service.title }}</h5>
+                            <p class="card-text">{{ service.description }}</p>
+                            <!--<p class="card-text"><strong>Price:</strong> {{ service.price }} </p>-->
+                            <a href="{% url 'service-file' service.id %}" class="btn btn-primary">View Service</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-container">
+                <div>
+                    <h5 onclick=window.location.href='/about/'>About Us</h5>
+                    <p>Learn more about our services and mission.</p><br>
+                    <h2>Powered by:<h3><span>bloomsite developers</span>
+                        <a href='https://bloomsitedevelopers.co.ke'>bloomsitedevelopers.co.ke</a>
+                </div>
+                <div>
+                    <h5>Contact</h5>
+                    <p>Email: crashcoders6@gmail.com</p>
+                    <p>Phone: +254702162058</p>
+                </div>
+                <div>
+                    <h5>Follow Us</h5>
+                    <a href="#">Facebook</a><br>
+                    <a href="#">Twitter</a><br>
+                    <a href="#">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function toggleMenu() {
+            const circleMenu = document.getElementById('circleMenu');
+            circleMenu.classList.toggle('visible');
+        }
+    </script>
+</body>
+</html>

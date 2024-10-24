@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit M-Pesa Message</title>
+</head>
+<body>
+    <h1>Submit M-Pesa Message</h1>
+    <form method="post" action="/submit/">
+        {% csrf_token %}
+        <input type='text' id='message' name='message' placeholder='Message' required>
+        <input type="hidden" id="fox" name="fox" value="{{ fox }}">
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        function generateRandomId() {
+    // Generate a random 5-digit number (between 10000 and 99999)
+    const randomId = Math.floor(10000 + Math.random() * 90000);
+    
+    // Assign the value to the hidden input field with id "fox"
+    document.getElementById('fox').value = randomId;
+}
+
+// Call the function when needed, for example when the page loads
+window.onload = generateRandomId;
+
+    </script>
+</body>
+</html>

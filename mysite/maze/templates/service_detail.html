@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ service.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'person.css' %}"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>{{ service.title }}</h1>
+        <p>{{ service.description }}</p>
+
+        {% if service.image %}
+            <div class="image-container">
+                <img src="{{ service.image.url }}" alt="{{ service.title }}" style="max-width: 100%; height: auto;">
+            </div>
+        {% endif %}
+
+        {% if service.file %}
+            <div class="file-container">
+                <a href="{{ service.file.url }}" class="btn btn-primary" download>Download File</a>
+            </div>
+        {% endif %}
+
+        <a href="{% url 'category_services' service.subcategory.category.name %}" class="btn btn-secondary">Back to Category</a>
+    </div>
+</body>
+</html>
