@@ -38,7 +38,7 @@ def submit_payment_proof(request):
 
 def payment_success(request):
     return render(request, 'payment_success.html')
-<<<<<<< HEAD
+
 
 from django.views.decorators.csrf import csrf_exempt
 from encron.tools import find_file
