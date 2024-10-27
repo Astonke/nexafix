@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaFix - Your Technical Marketplace</title>
+    {% load static %}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            overflow-x: hidden; /* Prevent sideways scrolling */
+        }
+
+        /* Header */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e90ff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555555;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #1e90ff;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .dropdown a {
+            padding: 10px 20px;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: #1e90ff;
+            color: #ffffff;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        .hero .search-bar {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        .hero .search-bar input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+        }
+
+        .hero .search-bar button {
+            padding: 12px 20px;
+            border: none;
+            background-color: #28a745;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .hero .search-bar button:hover {
+            background-color: #218838;
+        }
+
+        .hero .cta-buttons {
+            margin-top: 30px;
+        }
+
+        .hero .cta-buttons a {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 24px;
+            background-color: #ffffff;
+            color: #1e90ff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .hero .cta-buttons a:hover {
+            background-color: #1e90ff;
+            color: #ffffff;
+        }
+
+        /* Service Categories */
+        .services {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .services h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+
+        .service-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .service-card {
+            background-color: #ffffff;
+            width: 300px;
+            padding: 30px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            
+        }
+
+        .service-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #1e90ff;
+        }
+
+        .service-card p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .service-card a {
+            text-decoration: none;
+            color: #1e90ff;
+            font-weight: bold;
+        }
+
+        .service-card a:hover {
+            color: #0056b3;
+        }
+
+        /* Featured Services */
+        .featured {
+            background-color: #e9ecef;
+            padding: 60px 20px;
+        }
+
+        .featured h2 {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .featured-services {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .featured-service {
+            background-color: #ffffff;
+            width: 250px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .featured-service:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .featured-service img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .featured-service h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #1e90ff;
+        }
+
+        .featured-service p {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .featured-service a {
+            text-decoration: none;
+            color: #1e90ff;
+            font-weight: bold;
+        }
+
+        .featured-service a:hover {
+            color: #0056b3;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #dddddd;
+        }
+
+        footer p {
+            margin: 0;
+            color: #777777;
+        }
+
+        footer .footer-links a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #555555;
+        }
+
+        footer .footer-links a:hover {
+            color: #1e90ff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+                color: #1e90ff;
+            }
+
+            .dropdown {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .hero .search-bar {
+                flex-direction: column;
+            }
+
+            .hero .search-bar input, .hero .search-bar button {
+                width: 100%;
+                margin-bottom: 10px;
+                font-size: 14px;
+            }
+
+            .hero .cta-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .service-cards, .featured-services {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="/" class="header-logo">NexaFix</a>
+            <div class="nav-links">
+                <a href="/about/">About</a>
+                <a href="/contact-nexa/">Contact</a>
+            </div>
+            <span class="hamburger" onclick="toggleMenu()">&#9776;</span>
+        </div>
+        <div id="dropdownMenu" class="dropdown">
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Connect with Top Technical Experts</h1>
+        <p>Find the best IT, Engineering, and Technical Services tailored for you.</p>
+        <div class="search-bar">
+            <form method="GET" action="{% url 'search' %}">
+                <input type="search" placeholder="Search for services..." name="q" required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div class="cta-buttons">
+            <a href="/home">Browse Services</a>
+            <a href="/upload_service">Post a Service</a>
+        </div>
+    </section>
+
+    <!-- Service Categories -->
+    <section class="services">
+        <h2>Our Services</h2>
+        <div class="service-cards">
+            {% for category in categories %}
+            <div class="service-card" style="background-image: url('{% static category.name|stringformat:'s'|add:'.jpg' %}');">
+                <!--<img src="{% static category.name|stringformat:'s'|add:'.jpg' %}" alt="{{ category.name }} Services">-->
+                <h3>{{ category.name }}</h3>
+                <p>Explore a range of services in {{ category.name }} category.</p>
+                <a href="{% url 'category_services' category.name %}">View Services</a>
+            </div>
+            {% empty %}
+            <p>No categories available.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Featured Services -->
+    <!--
+    <section class="featured">
+        <h2>Featured Services</h2>
+        <div class="featured-services">
+            <div class="featured-service">
+                <img src="{% static 'images/featured-service.jpg' %}" alt="Featured Service 1">
+                <h3>Service Name 1</h3>
+                <p>Description of the service.</p>
+                <a href="#">Learn More</a>
+            </div>
+            <div class="featured-service">
+                <img src="{% static 'images/featured-service.jpg' %}" alt="Featured Service 2">
+                <h3>Service Name 2</h3>
+                <p>Description of the service.</p>
+                <a href="#">Learn More</a>
+            </div>
+            <div class="featured-service">
+                <img src="{% static 'images/featured-service.jpg' %}" alt="Featured Service 3">
+                <h3>Service Name 3</h3>
+                <p>Description of the service.</p>
+                <a href="#">Learn More</a>
+            </div>
+        </div>
+    </section>
+-->
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 NexaFix. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const dropdownMenu = document.getElementById("dropdownMenu");
+            if (dropdownMenu.style.display === "flex") {
+                dropdownMenu.style.display = "none";
+            } else {
+                dropdownMenu.style.display = "flex";
+            }
+        }
+    </script>
+</body>
+</html>

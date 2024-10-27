@@ -1,0 +1,247 @@
+<!-- templates/upload_service.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Service - NexaFix</title>
+    <style>
+        body {
+            background-color: #f0f4f8;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh; /* Ensure body takes at least full viewport height */
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background-color: #1e90ff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            flex-shrink: 0; /* Prevent header from shrinking */
+        }
+        nav {
+            margin: 10px 0;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .upload-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1; /* Allow the container to grow and fill available space */
+            padding: 40px 20px;
+            overflow-y: auto; /* Enable vertical scrolling if content overflows */
+        }
+        .upload-form {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 700px;
+            box-sizing: border-box;
+        }
+        .upload-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .upload-header h2 {
+            color: #1e90ff;
+            margin-bottom: 10px;
+        }
+        .upload-header p {
+            color: #555;
+            font-size: 16px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus,
+        input[type="file"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #1e90ff;
+            outline: none;
+        }
+        button {
+            background-color: #1e90ff;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        footer {
+            background-color: #1e90ff;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            flex-shrink: 0; /* Prevent footer from shrinking */
+        }
+        footer .footer-links a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        footer .footer-links a:hover {
+            text-decoration: underline;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .upload-form {
+                padding: 30px 20px;
+            }
+            nav a {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+        header button{
+            background-color:green;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 onclick="window.location.href='/homez'">NexaFix</h1>
+        <!--
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="#">Services</a>
+            <a href="#">About</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="#">Login</a>
+            <a href="#">Register</a>
+        </nav>-->
+        <button onclick="window.location.href='/pay'">Pay_service  (just $1)</button>
+    </header>
+
+    <div class="upload-container">
+        <div class="upload-form">
+            <div class="upload-header">
+                <h2>Upload Your Service</h2>
+                <p>Please fill out the form below to upload your service.</p>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert-success">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_title">Title</label>
+                    {{ form.title }}
+                </div>
+                <div class="form-group">
+                    <label for="id_description">Description</label>
+                    {{ form.description}}
+                </div>
+                <div class="form-group">
+                    <label for="id_category">Category</label>
+                    {{ form.category }}
+                </div>
+                <div class="form-group">
+                    <label for="id_subcategory">SubCategory</label>
+                    {{ form.subcategory }}
+                </div>
+                <div class="form-group">
+                    <label for="id_file">File</label>
+                    {{ form.file }}
+                </div>
+                <div class="form-group">
+                    <label for="id_image">Image</label>
+                    {{ form.image }}
+                </div>
+                <input type="text" id="verif" placeholder='verification code' name="verif" required><br><br>
+                <button type="submit">Upload Service</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 NexaFix. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const categorySelect = document.getElementById('id_category');
+            const subcategorySelect = document.getElementById('id_subcategory');
+
+            categorySelect.addEventListener('change', function () {
+                const categoryId = this.value;
+                if (categoryId) {
+                    fetch(`/ajax/load-subcategories/?category=${categoryId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            subcategorySelect.innerHTML = '<option value="">Select a subcategory</option>';
+                            data.forEach(function(subcategory) {
+                                const option = document.createElement('option');
+                                option.value = subcategory.id;
+                                option.textContent = subcategory.name;
+                                subcategorySelect.appendChild(option);
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error fetching subcategories:', error);
+                            subcategorySelect.innerHTML = '<option value="">No subcategories available</option>';
+                        });
+                } else {
+                    subcategorySelect.innerHTML = '<option value="">Select a subcategory</option>';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
