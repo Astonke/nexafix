@@ -14,7 +14,6 @@ from .models import SubCategory
 from django.http import JsonResponse
 from .funcs import verify_code
 
-
 def upload_service(request):
     form = ServiceForm(request.POST, request.FILES)
     if request.method == 'POST':
