@@ -38,6 +38,7 @@ def submit_payment_proof(request):
 
 def payment_success(request):
     return render(request, 'payment_success.html')
+<<<<<<< HEAD
 
 from django.views.decorators.csrf import csrf_exempt
 from encron.tools import find_file
@@ -49,3 +50,5 @@ def add_code(request,v_code):
     codefile=find_file('verif_code.csv')
     os.system(f'echo {v_code} >> {codefile}')
     return JsonResponse({'reply':'ok'})
+=======
+>>>>>>> 3f78c95d4af5d6e6d885eda22a52f553fa7973a7
