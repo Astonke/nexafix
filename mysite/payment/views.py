@@ -50,5 +50,4 @@ def add_code(request,v_code):
     codefile=find_file('verif_code.csv')
     os.system(f'echo {v_code} >> {codefile}')
     return JsonResponse({'reply':'ok'})
-=======
->>>>>>> 3f78c95d4af5d6e6d885eda22a52f553fa7973a7
+
