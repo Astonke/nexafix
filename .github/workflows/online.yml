@@ -32,6 +32,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           source venv/bin/activate
+          pip install -r req.txt
           cd mysite
           python3 manage.py runserver
           #echo Add other actions to build,
