@@ -1,4 +1,4 @@
-name: CI with Ngrok
+name: CI with Persistent Ngrok
 
 on:
   push:
@@ -17,7 +17,6 @@ jobs:
       # Install dependencies if needed
       - name: Set up Python environment and install dependencies
         run: |
-          #python3 -m venv venv
           source venv/bin/activate
           pip install -r req.txt
 
@@ -49,3 +48,7 @@ jobs:
         run: |
           sleep 5
           curl --silent --show-error http://127.0.0.1:4040/api/tunnels | jq -r '.tunnels[0].public_url'
+
+      # Keep the job running to maintain the Ngrok tunnel
+      - name: Keep Ngrok tunnel open
+        run: sleep 360000000  # Keeps the tunnel open for 1 hour; increase as needed
