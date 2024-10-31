@@ -47,7 +47,6 @@ jobs:
       - name: Get Ngrok URL
         run: |
           sleep 5
-          
           curl --silent --show-error http://127.0.0.1:4040/api/tunnels | jq -r '.tunnels[0].public_url'
 
       # Keep the job running to maintain the Ngrok tunnel
@@ -57,6 +56,5 @@ jobs:
             random_num=$((RANDOM))
             echo "Random number: $random_num"
             sleep 3
-            
           done
 
