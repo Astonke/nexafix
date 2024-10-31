@@ -1,5 +1,4 @@
 name: CI with Persistent Ngrok
-
 on:
   push:
     branches: [ "main" ]
