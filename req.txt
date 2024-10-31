@@ -8,3 +8,4 @@ selenium
 django-cors-headers
 pillow
 django-tailwind
+whitenoise
