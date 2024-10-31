@@ -54,6 +54,6 @@ jobs:
           while true; do
             random_num=$((RANDOM))
             echo "Random number: $random_num"
-            sleep 3
+            sleep 10000099999999
           done
 
