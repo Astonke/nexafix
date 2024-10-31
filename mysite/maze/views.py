@@ -279,3 +279,6 @@ def about(request):
 #contact-details
 def contact_detail(request):
     return render(request,'contact_details.html')
+
+def why_pay(request):
+    return render(request,'pay_about.html')
