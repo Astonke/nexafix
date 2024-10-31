@@ -30,5 +30,6 @@ urlpatterns = [
     path('pay/', include('payment.urls')),
 ]
 
-if settings.DEBUG:  # Serve media files only in development
+# Serve media files during development
+if True:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
