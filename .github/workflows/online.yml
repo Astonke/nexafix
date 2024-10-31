@@ -52,4 +52,5 @@ jobs:
 
       # Keep the job running to maintain the Ngrok tunnel
       - name: Keep Ngrok tunnel open
-        run: sleep 360000000  # Keeps the tunnel open for 1 hour; increase as needed
+        run: while true; do random_num=$((RANDOM)); echo "Random number: $random_num"; sleep 3; done
+
