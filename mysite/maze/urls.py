@@ -27,6 +27,7 @@ urlpatterns = [
     path('upload-success/', views.upload_success, name='upload_success'),
 
     path('about/', views.about, name='about'),
+    path('pay_reason/', views.why_pay, name='about'),
     path('contact-nexa/', views.contact_detail, name='about'),
    
 ]
