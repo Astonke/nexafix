@@ -338,7 +338,13 @@
             }
         }
 
+        .service-card p{
+            color:green;
+        }
         
+        .service-card h3{
+            color:red;
+        }
     </style>
 </head>
 <body>
@@ -378,7 +384,7 @@
         <h2>Our Services</h2>
         <div class="service-cards">
             {% for category in categories %}
-            <div class="service-card" style="background-image: url('{% static category.name|stringformat:'s'|add:'.jpg' %}');">
+            <div class="service-card" onclick=window.location.href="{% url 'category_services' category.name %}" style="background-image: url('{% static category.name|stringformat:'s'|add:'.jpg' %}');">
                 <!--<img src="{% static category.name|stringformat:'s'|add:'.jpg' %}" alt="{{ category.name }} Services">-->
                 <h3>{{ category.name }}</h3>
                 <p>Explore a range of services in {{ category.name }} category.</p>
