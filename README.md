@@ -1,6 +1,8 @@
 
 # nexafix
 
+#site found at https://nexafix.is-great.net , improved project data
+
 project is meant to be a technical service page for technicians
 
 i mean it to be opensource and free , and easy for anyone to host and provide the service for different localities
